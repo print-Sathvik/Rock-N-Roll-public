@@ -1,0 +1,126 @@
+{% load socialaccount %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'register_style.css' %}">
+    <style>
+       
+.google-Oauth{
+  text-align: center;
+  position: relative;
+  margin-top: 20px;
+  margin-left: 30px;
+  width: 350px;
+  height: 70px;
+  background-color: white;
+  font-size: 10px;
+  border: 1px outset white;
+  border-radius: 10px;
+  transform: scale(0.75) translateX(-80px);
+}
+.fa-google {
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  margin-left: -280px;
+  margin-top: 20px;
+}
+.google{
+    margin-top: -32px;
+    margin-left: 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="square" style="--i:0;"></div>
+          <div class="square" style="--i:1;"></div>
+          <div class="square" style="--i:2;"></div>
+          <div class="square" style="--i:3;"></div>
+          <div class="square" style="--i:4;"></div>
+          <!-- <div class="square" style="--i:5;"></div> -->
+          <div class="mic" style="--i:6;"></div>
+          <svg class="mic" viewBox="0 0 16 16">
+            <path
+              d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1
+              0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"></path>
+            <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3z">
+            </path>
+          </svg>
+          <svg class="headphone" viewBox="0 0 512 512">
+            <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
+            <path
+              d="M256 32C112.9 32 4.563 151.1 0 288v104C0 405.3 10.75 416 23.1 416S48 405.3 48 392V288c0-114.7 93.34-207.8 
+              208-207.8C370.7 80.2 464 173.3 464 288v104C464 405.3 474.7 416 488 416S512 405.3 512 392V287.1C507.4 151.1 
+              399.1 32 256 32zM160 288L144 288c-35.34 0-64 28.7-64 64.13v63.75C80 451.3 108.7 480 144 480L160 480c17.66 0 
+              32-14.34 32-32.05v-127.9C192 302.3 177.7 288 160 288zM368 288L352 288c-17.66 0-32 14.32-32 32.04v127.9c0 17.7 
+              14.34 32.05 32 32.05L368 480c35.34 0 64-28.7 64-64.13v-63.75C432 316.7 403.3 288 368 288z" />
+          </svg>
+          <svg class="mic mic2" viewBox="0 0 16 16">
+            <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1
+                        0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"></path>
+            <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3z">
+            </path>
+          </svg>
+          <svg class="radio" viewBox="0 0 24 24">
+            <path fill-rule="evenodd"
+              d="M9.1925824,8 L20,8 C21.1045695,8 22,8.8954305 22,10 L22,20 C22,21.1045695 21.1045695,22 20,22 L4,22 C2.8954305,22 2,21.1045695 2,20 L2,10 C2,8.9709596 2.77716036,8.12343473 3.77656571,8.01234076 L18.6286093,2.07152331 L19.3713907,3.92847669 L9.1925824,8 Z M4,10 L4,20 L20,20 L20,10 L4,10 Z M14,17 L14,15 L19,15 L19,17 L14,17 Z M14,14 L14,12 L19,12 L19,14 L14,14 Z M9,19 C6.790861,19 5,17.209139 5,15 C5,12.790861 6.790861,11 9,11 C11.209139,11 13,12.790861 13,15 C13,17.209139 11.209139,19 9,19 Z M9,17 C10.1045695,17 11,16.1045695 11,15 C11,13.8954305 10.1045695,13 9,13 C7.8954305,13 7,13.8954305 7,15 C7,16.1045695 7.8954305,17 9,17 Z M9,16 C8.44771525,16 8,15.5522847 8,15 C8,14.4477153 8.44771525,14 9,14 C9.55228475,14 10,14.4477153 10,15 C10,15.5522847 9.55228475,16 9,16 Z" />
+          </svg>
+          <svg class="radio radio2" viewBox="0 0 24 24">
+            <path fill-rule="evenodd"
+              d="M9.1925824,8 L20,8 C21.1045695,8 22,8.8954305 22,10 L22,20 C22,21.1045695 21.1045695,22 20,22 L4,22 C2.8954305,22 2,21.1045695 2,20 L2,10 C2,8.9709596 2.77716036,8.12343473 3.77656571,8.01234076 L18.6286093,2.07152331 L19.3713907,3.92847669 L9.1925824,8 Z M4,10 L4,20 L20,20 L20,10 L4,10 Z M14,17 L14,15 L19,15 L19,17 L14,17 Z M14,14 L14,12 L19,12 L19,14 L14,14 Z M9,19 C6.790861,19 5,17.209139 5,15 C5,12.790861 6.790861,11 9,11 C11.209139,11 13,12.790861 13,15 C13,17.209139 11.209139,19 9,19 Z M9,17 C10.1045695,17 11,16.1045695 11,15 C11,13.8954305 10.1045695,13 9,13 C7.8954305,13 7,13.8954305 7,15 C7,16.1045695 7.8954305,17 9,17 Z M9,16 C8.44771525,16 8,15.5522847 8,15 C8,14.4477153 8.44771525,14 9,14 C9.55228475,14 10,14.4477153 10,15 C10,15.5522847 9.55228475,16 9,16 Z" />
+          </svg>
+          <!-- <svg class="chatIcon" viewBox="-50 -20 100 100" stroke-width="0" stroke="currentColor">
+            <path stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" />
+          </svg> -->
+        <form method="post">
+            {% csrf_token %}
+            <div class="form">
+                {% if messages %}
+                    {% for message in messages %}
+                        <h4 class="error">
+                            {{ message }}
+                        </h4>
+                    {% endfor %}
+                {% endif %}
+                <h2>Sign in</h2>
+                <div class="inputBox">
+                    <input type="text" name="username" required="required">
+                    <span>Username</span>
+                    <i></i>
+                </div>
+                <div class="inputBox">
+                    <input type="password" name="password" required="required">
+                    <span>Password</span>
+                    <i></i>
+                </div>
+                <div class="links">
+                    <a href="{% url 'forgot' %}">Forgot Password</a>
+                    <a href="{% url 'register_attempt' %}">Signup</a>
+                </div>
+                <input type="submit" style="z-index:50;" value="Login">
+                <a href="{% provider_login_url 'google' %}" style="text-decoration: none; color: black;">
+                  <div class="google-Oauth">
+                    <i class="fab fa-google fa-3x"></i>
+                    <p class="google"> Continue with google </p>
+                  </div>
+                </a>
+            </div>
+        </form>
+    </div>
+    </div>
+</body>
+</html>

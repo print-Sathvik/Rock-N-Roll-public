@@ -1,0 +1,231 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'podcast_style.css' %}">
+    <title>{{podcast.title}} - Rock-N-Roll</title>
+    <script>
+      function add_to_fav(id) {
+        fetch(`/favourites/${id}`).then(window.location.reload())
+      }
+    </script>
+    
+  </head>
+  <body>
+    <header>
+      <div class="menu_side">
+        <h1 style="color: #36e2ec;margin-left: 7%;margin-top: 10%;">{{podcast.publisher}}</h1>
+        </br>
+        <p class="podcastAuthInfo">About: {{podcast.description}}</p>
+      </div>
+      <div class="song_side">
+        <nav>
+          <ul>
+            <li style="font-size: large;" onclick="window.location.href='/'">Discover <span></span></li>
+            <li style="font-size: large;" onclick="window.location.href='/uploads/albums'">MY LIBRARY</li>
+            <li style="font-size: large;" onclick="window.location.href='/favourites'">Favourites</li>
+            <li style="font-size: large;" onclick="window.location.href='/genre'">Genre</li>
+          </ul>
+          <div class="search">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Search">
+          </div>
+          <div class="user">
+            <img src="https://raw.githubusercontent.com/multiavatar/Multiavatar/main/logo.png?v=001" alt="User Photo">
+          </div>
+        </nav>
+        <div class="podcast_main">
+          <h1 class="podcast-title" style="font-size: xx-large;">{{podcast.title}}</h1>
+          <div class="podcast-image-container">
+            <img src="/media/{{podcast.thumbnail}}" alt="Podcast Image" class="podcast-image">
+          </div>
+          <h4 style="padding: 10px;font-size: large;">Speakers: {{podcast.speaker}}</h4>
+            <button value="{{podcast.id}}" onclick="add_to_fav(this.value)"
+              style="width: fit-content;height: fit-content;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill={{fill}} viewBox="0 0 24 24" stroke-width="1.5" stroke="red" style="height: 40px;width: 40px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>              
+            </button>
+          <p style="padding:5px;">{{podcast.views}} Vews</p>
+          <p style="padding:5px;">{{podcast.created_at}}</p>
+        </div>
+        <div style="width: 100%;justify-content: center;align-items: center;">
+          <h3 style="font-size: 24px;padding: 30px;color: aqua;">Other podcasts from the same album:</h3>
+          {% for i in related_podcasts %}
+            <div class="podcast">
+              <div class="podcast__cover">
+                <img src="/media/{{i.thumbnail}}" alt="Podcast Cover">
+              </div>
+              <div class="podcast__info">
+                <h2 class="podcast__title">{{i.title}}</h2>
+                <p class="podcast__description">{{i.description}}</p>
+                <!-- <audio class="podcast__player" src="/media/{{i.file}}" controls></audio> -->
+              </div>
+              <button onclick="window.location.href='/podcast/{{i.id}}'" 
+              style="width: fit-content;height: fit-content;position: relative;bottom: -40px;margin-right: 30px;">
+              <svg style="color: aqua;width: 40px;height: 40px;" stroke="aqua" fill="aqua" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                <path fill="aqua" d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm0 832a384 384 0 0 0 0-768 384 384 0 0 0 0 768zm-48-247.616L668.608 512 464 375.616v272.768zm10.624-342.656 249.472 166.336a48 48 0 0 1 0 79.872L474.624 718.272A48 48 0 0 1 400 678.336V345.6a48 48 0 0 1 74.624-39.936z"></path>
+              </svg>          
+            </button>
+            <button
+              style="width: fit-content;height: fit-content;position: relative;bottom: -40px;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" style="height: 40px;width: 40px;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>              
+            </button>
+            </div>
+          {% endfor %}
+        </div>
+        
+      </div>
+      
+    </header>
+    <div class="master_play">
+        <div class="wave">
+          <div class="wave1 bi-play-fill"></div>
+          <div class="wave1 bi-play-fill"></div>
+          <div class="wave1 bi-play-fill"></div>
+        </div>
+        <img src="/media/{{podcast.thumbnail}}" alt="Alan" id="poster_master_play">
+        <h5 id="title">{{podcast.title}} <br>
+          <div class="subtitle">{{podcast.speaker}}</div>
+        </h5>
+        <div style="display: none;">
+          <audio src="/media/{{podcast.file}}" id="podcast-audio"></audio>
+        </div>
+        <div class="icon">
+          <i class="bi bi-skip-start-fill" id="back"></i>
+          <i class="bi bi-play-fill" id="masterPlay"></i>
+          <i class="bi bi-skip-end-fill" id="next"></i>
+        </div>
+        <span id="currentStart">0:00</span>
+        <div class="bar">
+          <input type="range" id="seek" min="0" value="0" max="100">
+          <div class="bar2" id="bar2"></div>
+          <div class="dot"></div>
+        </div>
+        <span id="currentEnd">0:00</span>
+        <div class="vol">
+          <i class="bi bi-volume-down-fill" id="vol_icon"></i>
+          <input type="range" id="vol" min="0" value="30" max="100">
+          <div class="vol_bar"></div>
+          <div class="dot" id="vol_dot"></div>
+        </div>
+      </div>
+      <script>
+        const player = document.querySelector('#podcast-audio');
+          const playButton = document.getElementById('masterPlay');
+          const currentStart = document.getElementById('currentStart');
+          const currentEnd = document.getElementById('currentEnd');
+          const seekBar = document.getElementById('seek');
+          const volumeBar = document.getElementById('vol');
+          const volBar = document.querySelector('.vol_bar');
+          const volDot = document.querySelector('#vol_dot');
+          const bar2 = document.querySelector('#bar2');
+          console.log("hello")
+          console.log(window.location.href)
+          url=window.location.href
+          const parts = url.split('/');
+          const lastPart = parts[parts.length - 1];
+          const lastInteger = parseInt(lastPart);
+          console.log(lastInteger);
+          const podcast_id=lastInteger
+
+          // Set audio source to podcast player src
+          const audio = new Audio(player.src);
+
+
+
+          // Play audio function
+          function playAudio() {
+            audio.play();
+            playButton.classList.remove('bi-play-fill');
+            playButton.classList.add('bi-pause-fill');
+          }
+
+          // Pause audio function
+          function pauseAudio() {
+            audio.pause();
+            playButton.classList.add('bi-play-fill');
+            playButton.classList.remove('bi-pause-fill');
+            console.log(audio.currentTime)
+            // console.log(player.value)
+            fetch(`/history/set/${podcast_id}/${audio.currentTime}`)
+            .then(response => response.json())
+            .then(data => {
+              const curTime = data.time;
+              console.log(curTime);
+            })
+            .catch(error => {
+              console.error('Error fetching data:', error);
+            });
+          }
+
+          // Set duration time
+          audio.onloadedmetadata = function () {
+            fetch(`/history/get/${podcast_id}`)
+            .then(response => response.json())
+            .then(data => {
+              const curTime = data.time;
+              console.log(curTime)
+              audio.currentTime=curTime;
+            currentEnd.innerHTML = formatTime(audio.duration);
+            currentStart.innerHTML = formatTime(audio.currentTime);
+            seekBar.max = audio.duration;
+            })
+            .catch(error => {
+              console.error('Error fetching data:', error);
+            });
+            
+          };
+
+          // Update current time
+          audio.ontimeupdate = function () {
+            currentStart.innerHTML = formatTime(audio.currentTime);
+            seekBar.value = audio.currentTime;
+            const barWidth = (audio.currentTime / audio.duration) * 100;
+            bar2.style.width = barWidth + '%';
+          };
+
+          // Seek bar update
+          seekBar.oninput = function () {
+            audio.currentTime = seekBar.value;
+            bar2.style.width = (seekBar.value / audio.duration) * 100 + '%';
+          };
+
+          // Volume bar update
+          volumeBar.oninput = function () {
+            audio.volume = volumeBar.value / 100;
+            volDot.style.left = volumeBar.value + '%';
+            volBar.style.width = volumeBar.value + '%';
+          };
+
+          // Format time function
+          function formatTime(seconds) {
+            let min = Math.floor(seconds / 60);
+            let sec = Math.floor(seconds % 60);
+            sec = sec < 10 ? '0' + sec : sec;
+            return min + ':' + sec;
+          }
+
+          // Add event listener to play button
+          playButton.addEventListener('click', function () {
+            
+            if (audio.paused) {
+              playAudio();
+            } else {
+              pauseAudio();
+            }
+          });
+          
+      function setpodcastid(id){
+        podcast_id=id;
+      }
+      </script>
+
+  </body>
+</html>

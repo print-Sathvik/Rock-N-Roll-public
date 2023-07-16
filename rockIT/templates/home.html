@@ -1,0 +1,168 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'styleHome.css' %}">
+    <title>Rock-N-Roll</title>
+    
+</head>
+
+<body>
+    <header>
+        <div class="song_side">
+            <nav>
+                <ul>
+                    <li style="font-size: large;" onclick="window.location.href='/'">Discover <span></span></li>
+                    <li style="font-size: large;" onclick="window.location.href='/uploads/albums'">MY LIBRARY</li>
+                    <li style="font-size: large;" onclick="window.location.href='/favourites'">Favourites</li>
+                    <li style="font-size: large;" onclick="window.location.href='/genre'">Genre</li>
+                </ul>
+                <form>
+                    <div class="container">
+                        <input type="text" class="search" style="background-color: white;" id="tag-search" placeholder="Search" />
+                        <div id="tag-suggestions" class="tag-container">    </div>
+                    </div>
+                </form>
+
+                <div class="dropdown">
+                    <div class="user dropbtn">
+                        <img src="https://raw.githubusercontent.com/multiavatar/Multiavatar/main/logo.png?v=001"
+                            alt="User Photo" title={{username}}>
+                    </div>
+                    <div class="dropdown-content" style="width: fit-content;">
+                        <a href="#" style="border-bottom: 2px solid black;">Profile</a>
+                        <a href="/uploads/albums"style="border-bottom: 2px solid black;">My Albums</a>
+                        <a href="/logout" style="border-bottom: 2px solid black;">Signout</a>
+                        <a href="#" style="border-bottom: 2px solid black;">Settings</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="content">
+                <h1>Rock N Roll Podcasts</h1>
+                <p>
+                    You listen, we talk
+                    <br>
+                    Podcast for all. Let's talk about anything
+                </p>
+                <div class="buttons">
+                    <button>PLAY</button>
+                    <button>FOLLOW</button>
+                </div>
+            </div>
+            <div class="popular_song">
+                <div class="h4">
+                    <h4 style="padding-left: 80px;">Recent Podcasts</h4>
+                    <div class="btn_s">
+                        <i class="bi bi-chevron-left"></i>
+                        <i class="bi bi-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="pop_song">
+                    {% for i in podcasts %}
+                    <li class="songItem" onclick="window.location.href = `/podcast/{{i.id}}`">
+                        <div class="img_play">
+                            <img src="/media/{{i.thumbnail}}" alt="alan" style="width: 140px; height: 140px; object-fit: cover;">
+                            <i class="bi playListPlay bi-play-circle-fill" id="7"></i>
+                        </div>
+                        <h5>{{i.title}}
+                            <br>
+                            <div class="subtitle">{{i.speaker}}</div>
+                        </h5>
+                    </li>
+                    {% endfor %}
+                </div>
+                <br>
+                <div class="popular_song">
+                    <div class="h4">
+                        <h4 style="padding-left: 80px;">Popular Podcasts By Views</h4>
+                        <div class="btn_s">
+                            <i class="bi bi-chevron-left"></i>
+                            <i class="bi bi-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="pop_song">
+                        {% for i in ordered %}
+                        <li class="songItem" onclick="window.location.href = `/podcast/{{i.id}}`">
+                            <div class="img_play">
+                                <img src="/media/{{i.thumbnail}}" alt="alan" style="width: 140px; height: 140px; object-fit: cover;">
+                                <i class="bi playListPlay bi-play-circle-fill" id="7"></i>
+                            </div>
+                            <h5>{{i.title}}
+                                <br>
+                                <div class="subtitle">{{i.speaker}}</div>
+                            </h5>
+                        </li>
+                        {% endfor %}
+                    </div>
+            </div>
+        </div>
+    </header>
+    <script>
+        const input = document.getElementById('tag-search');
+
+        input.addEventListener('input', (event) => {
+        const inputValue = event.target.value;
+        updateTagSuggestions(inputValue);
+        });
+        function updateTagSuggestions(searchValue) {
+            const tagSuggestions = document.getElementById("tag-suggestions");
+
+            if (searchValue.trim() === "") {
+                tagSuggestions.innerHTML = "";
+                return;
+            }
+
+            fetch(`/search_tags/?q=${searchValue}`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then((tags) => {
+                    tagSuggestions.innerHTML = "";
+                    console.log(tags);
+                    tags.slice(0, 5).forEach((tag) => {
+                        const tagDiv = document.createElement("div");
+                        const imageDiv = document.createElement("div");
+                        const textDiv = document.createElement("div");
+                        imageDiv.innerHTML += ` <img src="/media/${tag.thumbnail}" alt = "alt" width="40" height="40"> `;
+                        tagDiv.classList.add("tag");
+                        textDiv.classList.add("searchTextDiv");
+                        textDiv.textContent = tag.name;
+                        tagDiv.dataset.id = tag.id;
+                        tagDiv.addEventListener("click", () => {
+                            window.location.href = `/podcast/${tag.id}`
+                        });
+                        tagDiv.appendChild(imageDiv)
+                        tagDiv.appendChild(textDiv)
+                        tagSuggestions.appendChild(tagDiv);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error fetching tag suggestions:", error);
+                    tagSuggestions.innerHTML = "Error fetching tag suggestions";
+                });
+        }
+
+        let lft_btn = document.getElementsByClassName('bi-chevron-left')[0];
+        let right_btn = document.getElementsByClassName('bi-chevron-right')[0];
+        let cards = document.getElementsByClassName('pop_song')[0];
+        let search = document.getElementsByClassName('search')[0];
+        let search_input = document.getElementById('search_input');
+        lft_btn.addEventListener('click', () => {
+            cards.scrollLeft -= 140;
+        });
+        right_btn.addEventListener('click', () => {
+            cards.scrollLeft += 140;
+        });
+    </script>
+</body>
+
+</html>

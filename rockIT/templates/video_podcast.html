@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'podcast_style.css' %}">
+    <title>{{podcast.title}} - Rock-N-Roll</title>
+    <script>
+      function add_to_fav(id) {
+        fetch(`/favourites/${id}`).then(window.location.reload())
+      }
+    </script>
+    
+  </head>
+  <body>
+    <header>
+      <div class="menu_side" style="width:15%">
+        <h1 style="color: #36e2ec;margin-left: 7%;margin-top: 10%;">{{podcast.publisher}}</h1>
+        </br>
+        <p class="podcastAuthInfo">About: {{podcast.description}}</p>
+      </div>
+      <div class="song_side" style="width: 85%;">
+        <nav>
+          <ul>
+            <li style="font-size: large;" onclick="window.location.href='/'">Discover <span></span></li>
+            <li style="font-size: large;" onclick="window.location.href='/uploads/albums'">MY LIBRARY</li>
+            <li style="font-size: large;" onclick="window.location.href='/favourites'">Favourites</li>
+            <li style="font-size: large;" onclick="window.location.href='/genre'">Genre</li>
+          </ul>
+          <div class="search">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Search">
+          </div>
+          <div class="user">
+            <img src="https://raw.githubusercontent.com/multiavatar/Multiavatar/main/logo.png?v=001" alt="User Photo">
+          </div>
+        </nav>
+        <div class="podcast_main">
+          <h1 class="podcast-title" style="font-size: xx-large;">{{podcast.title}}</h1>
+          <div>
+            <video src="/media/{{podcast.file}}" controls style="padding: 10px;padding-right: 30px;height: 500px;"></video>
+          </div>
+          <h4 style="padding: 8px;font-size: large;">Speakers: {{podcast.speaker}}</h4>
+          <button value="{{podcast.id}}" onclick="add_to_fav(this.value)"
+            style="width: fit-content;height: fit-content;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill={{fill}} viewBox="0 0 24 24" stroke-width="1.5" stroke="red" style="height: 40px;width: 40px;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+            </svg>              
+          </button>
+          <p style="padding:5px;">{{podcast.views}} Vews</p>
+          <p style="padding:5px;">{{podcast.created_at}}</p>
+        </div>
+        <div>
+          <h3 style="font-size: 24px;padding-left: 30px;padding-top: 20px;color: aqua;">Other podcasts from the same album:</h3>
+          {% for i in related_podcasts %}
+            <div class="podcast">
+              <div class="podcast__cover">
+                <img src="/media/{{i.thumbnail}}" alt="Podcast Cover">
+              </div>
+              <div class="podcast__info">
+                <h2 class="podcast__title">{{i.title}}</h2>
+                <p class="podcast__description">{{i.speaker}}</p>
+                <p class="podcast__description">{{i.description}}</p>
+                <!-- <audio class="podcast__player" src="/media/{{i.file}}" controls></audio> -->
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        
+      </div>
+      
+    </header>
+
+  </body>
+</html>

@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>Genre | Rock-N-Roll</title>
+      <link rel="stylesheet" href="{% static 'genreStyle.css' %}">
+   </head>
+   <body>
+      <header>
+         <div class="song_side">
+            <nav>
+               <ul>
+                  <li style="font-size: large;" onclick="window.location.href='/'">Discover <span></span></li>
+                  <li style="font-size: large;" onclick="window.location.href='/uploads/albums'">MY LIBRARY</li>
+                  <li style="font-size: large;" onclick="window.location.href='/favourites'">Favourites</li>
+                  <li style="font-size: large;" onclick="window.location.href='/genre'">Genre</li>
+               </ul>
+               <form>
+                  <div class="container1">
+                     <div class="search">
+                        <input type="text" class="search-box" id="search-box" placeholder="Search genres...">
+                     </div>
+                     <div id="tag-suggestions" class="tag-container"> </div>
+                  </div>
+               </form>
+               <div class="dropdown">
+                  <div class="user dropbtn">
+                     <img src="https://raw.githubusercontent.com/multiavatar/Multiavatar/main/logo.png?v=001" alt="User Photo"
+                        title={{username}}>
+                  </div>
+                  <div class="dropdown-content" style="width: fit-content;">
+                     <a href="#" style="border-bottom: 2px solid black;">Profile</a>
+                     <a href="/uploads/albums" style="border-bottom: 2px solid black;">My Albums</a>
+                     <a href="/logout" style="border-bottom: 2px solid black;">Signout</a>
+                     <a href="#" style="border-bottom: 2px solid black;">Settings</a>
+                  </div>
+               </div>
+            </nav>
+         </div>
+      </header>
+      <div class="container">
+         <div class="genre-grid">
+            <a class="genre" data-genre="comedy" href="/genre/comedy">
+               <img src="https://picsum.photos/id/10/400/200" alt="Comedy">
+               <div class="genre-name">Comedy</div>
+            </a>
+            <a class="genre" data-genre="drama" href="/genre/drama">
+               <img src="https://picsum.photos/id/20/400/200" alt="drama">
+               <div class="genre-name">Drama</div>
+            </a>
+            <a class="genre" data-genre="Health and fitness" href="/genre/Health and fitness">
+               <img src="https://picsum.photos/id/30/400/200" alt="Health and fitness">
+               <div class="genre-name">Health and fitness</div>
+            </a>
+            <a class="genre" data-genre="News" href="/genre/news">
+               <img src="https://picsum.photos/id/40/400/200" alt="News">
+               <div class="genre-name">News</div>
+            </a>
+            <a class="genre" data-genre="history" href="/genre/History">
+               <img src="https://picsum.photos/id/50/400/200" alt="Historical">
+               <div class="genre-name">History</div>
+            </a>
+            <a class="genre" data-genre="Politics" href="/genre/Politics">
+               <img src="https://picsum.photos/id/60/400/200" alt="Politics">
+               <div class="genre-name">Politics</div>
+            </a>
+            <a class="genre" data-genre="Pop culture" href="/genre/Pop culture">
+               <img src="https://picsum.photos/id/70/400/200" alt="Pop culture">
+               <div class="genre-name">Pop culture</div>
+            </a>
+            <a class="genre" data-genre="Religion" href="/genre/Religion">
+               <img src="https://picsum.photos/id/80/400/200" alt="Religion">
+               <div class="genre-name">Religion</div>
+            </a>
+            <a class="genre" data-genre="Sports" href="/genre/Sports">
+               <img src="https://picsum.photos/id/90/400/200" alt="Sports">
+               <div class="genre-name">Sports</div>
+            </a>
+            <a class="genre" data-genre="Monologue" href="/genre/Monologue">
+               <img src="https://picsum.photos/id/100/400/200" alt="Monologue">
+               <div class="genre-name">Monologue</div>
+            </a>
+            <a class="genre" data-genre="Storytelling" href="/genre/Storytelling">
+               <img src="https://picsum.photos/id/110/400/200" alt="Storytelling">
+               <div class="genre-name">Storytelling</div>
+            </a>
+            <a class="genre" data-genre="Technology" href="/genre/Technology">
+               <img src="https://picsum.photos/id/120/400/200" alt="Technology">
+               <div class="genre-name">Technology</div>
+            </a>
+         </div>
+      </div>
+      <script>
+         const searchBox = document.getElementById('search-box');
+         const genres = document.querySelectorAll('.genre');
+         searchBox.addEventListener('input', function () {
+                 const searchTerm = searchBox.value.toLowerCase();
+                 genres.forEach(function (genre) {
+                     const genreName = genre.dataset.genre.toLowerCase();
+                     if (genreName.includes(searchTerm)) {
+                         genre.style.display = 'block';
+                     } else {
+                         genre.style.display = 'none';
+                     }
+                 });
+             });
+      </script>
+   </body>
+</html>

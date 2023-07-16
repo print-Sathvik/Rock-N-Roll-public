@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{%block title%}
+{%endblock%}
+{%block content%}
+<!-- <head>
+<style>
+  input[type="text"] {
+    border-radius: 20px;
+  }
+</style>
+</head>
+
+<div class="container">
+  <h2 style="margin:30px;">Add new song here.</h2>
+  <form method="POST" enctype="multipart/form-data">{# this field is important for file upload #}
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <button type="submit" class="save btn btn-success">Save</button>
+  </form>
+</div> -->
+
+
+<!Doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Rock-N-Roll | New Podcast</title>
+
+    <style>
+      body {
+        background:url('/static/back.jpg');
+        background-repeat: no-repeat;
+  background-size: 100% 100%;
+      }
+    
+      h2 {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        font-size: 36px;
+        color: #45f3ff;
+      }
+    
+      form {
+        backdrop-filter: blur(5px);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      }
+    
+      .form-group {
+        margin-bottom: 30px;
+      }
+    
+      label {
+        color: #45f3ff;
+        font-size: 20px;
+        margin-bottom: 10px;
+        display: block;
+      }
+    
+      input[type="text"],
+      textarea {
+        font-size: 18px;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        width: 100%;
+        transition: all 0.3s ease-in-out;
+      }
+    
+      input[type="text"]:focus,
+      textarea:focus {
+        outline: none;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+      input[type="file"] {
+        color: white;
+      }
+    
+      input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: #0069d9;
+}
+    
+      .btn {
+        font-size: 20px;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        width: 100%;
+        background-color: #007bff;
+        color: #fff;
+        transition: all 0.3s ease-in-out;
+      }
+    
+      .btn:hover {
+        background-color: #0056b3;
+        cursor: pointer;
+      }
+
+
+    </style>
+  </head>
+
+  <body>
+  <div class="container">
+    <h2 style="margin:30px;">Add new podcast here</h2>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      
+    <button type="submit" class="save btn btn-success">Save</button>
+    </form>
+  </div>
+
+  </body>
+</html>
+
+{%endblock%}
